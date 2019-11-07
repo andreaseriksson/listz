@@ -18,9 +18,9 @@
       <td><%= list.description %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.list_path(@conn, :show, list) %></span>
-        <span><%= link "Edit", to: Routes.list_path(@conn, :edit, list) %></span>
-        <span><%= link "Delete", to: Routes.list_path(@conn, :delete, list), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span><%= link "Show", to: Routes.list_path(@conn, :show, list.slug) %></span>
+        <span><%= link "Edit", to: Routes.list_path(@conn, :edit, list.slug) %></span>
+        <span><%= link "Delete", to: Routes.list_path(@conn, :delete, list.slug), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
     </tr>
 <% end %>

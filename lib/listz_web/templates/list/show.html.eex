@@ -19,5 +19,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.list_path(@conn, :edit, @list) %></span>
+<span><%= link "Edit", to: Routes.list_path(@conn, :edit, @list.slug) %></span>
 <span><%= link "Back", to: Routes.list_path(@conn, :index) %></span>

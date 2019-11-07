@@ -47,7 +47,7 @@ defmodule ListzWeb.ListControllerTest do
     setup [:create_list]
 
     test "renders form for editing chosen list", %{conn: conn, list: list} do
-      conn = get(conn, Routes.list_path(conn, :edit, list))
+      conn = get(conn, Routes.list_path(conn, :edit, list.slug))
       assert html_response(conn, 200) =~ "Edit List"
     end
   end
@@ -56,15 +56,16 @@ defmodule ListzWeb.ListControllerTest do
     setup [:create_list]
 
     test "redirects when data is valid", %{conn: conn, list: list} do
-      conn = put(conn, Routes.list_path(conn, :update, list), list: @update_attrs)
-      assert redirected_to(conn) == Routes.list_path(conn, :show, list)
+      conn = put(conn, Routes.list_path(conn, :update, list.slug), list: @update_attrs)
+      list = Lists.get_list!(list.id)
+      assert redirected_to(conn) == Routes.list_path(conn, :show, list.slug)
 
-      conn = get(conn, Routes.list_path(conn, :show, list))
+      conn = get(conn, Routes.list_path(conn, :show, list.slug))
       assert html_response(conn, 200) =~ "some updated description"
     end
 
     test "renders errors when data is invalid", %{conn: conn, list: list} do
-      conn = put(conn, Routes.list_path(conn, :update, list), list: @invalid_attrs)
+      conn = put(conn, Routes.list_path(conn, :update, list.slug), list: @invalid_attrs)
       assert html_response(conn, 200) =~ "Edit List"
     end
   end
@@ -73,10 +74,10 @@ defmodule ListzWeb.ListControllerTest do
     setup [:create_list]
 
     test "deletes chosen list", %{conn: conn, list: list} do
-      conn = delete(conn, Routes.list_path(conn, :delete, list))
+      conn = delete(conn, Routes.list_path(conn, :delete, list.slug))
       assert redirected_to(conn) == Routes.list_path(conn, :index)
       assert_error_sent 404, fn ->
-        get(conn, Routes.list_path(conn, :show, list))
+        get(conn, Routes.list_path(conn, :show, list.slug))
       end
     end
   end

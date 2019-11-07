@@ -19,7 +19,7 @@ defmodule ListzWeb.ListController do
       {:ok, list} ->
         conn
         |> put_flash(:info, "List created successfully.")
-        |> redirect(to: Routes.list_path(conn, :show, list))
+        |> redirect(to: Routes.list_path(conn, :show, list.slug))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -27,24 +27,24 @@ defmodule ListzWeb.ListController do
   end
 
   def show(conn, %{"id" => id}) do
-    list = Lists.get_list!(id)
+    list = Lists.get_list_by_slug!(id)
     render(conn, "show.html", list: list)
   end
 
   def edit(conn, %{"id" => id}) do
-    list = Lists.get_list!(id)
+    list = Lists.get_list_by_slug!(id)
     changeset = Lists.change_list(list)
     render(conn, "edit.html", list: list, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "list" => list_params}) do
-    list = Lists.get_list!(id)
+    list = Lists.get_list_by_slug!(id)
 
     case Lists.update_list(list, list_params) do
       {:ok, list} ->
         conn
         |> put_flash(:info, "List updated successfully.")
-        |> redirect(to: Routes.list_path(conn, :show, list))
+        |> redirect(to: Routes.list_path(conn, :show, list.slug))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", list: list, changeset: changeset)
@@ -52,7 +52,7 @@ defmodule ListzWeb.ListController do
   end
 
   def delete(conn, %{"id" => id}) do
-    list = Lists.get_list!(id)
+    list = Lists.get_list_by_slug!(id)
     {:ok, _list} = Lists.delete_list(list)
 
     conn

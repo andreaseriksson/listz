@@ -10,5 +10,6 @@ defmodule Listz.Repo.Migrations.CreateLists do
       timestamps()
     end
 
+    create index(:lists, [:slug])
   end
 end
