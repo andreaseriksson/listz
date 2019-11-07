@@ -15,6 +15,7 @@ defmodule Listz.Lists.List do
     list
     |> cast(attrs, [:title, :description])
     |> validate_required([:title, :description])
+    |> unique_constraint(:title, name: :lists_slug_index)
     |> set_slug()
   end
 

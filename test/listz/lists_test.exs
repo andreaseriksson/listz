@@ -45,6 +45,11 @@ defmodule Listz.ListsTest do
       assert {:error, %Ecto.Changeset{}} = Lists.create_list(@invalid_attrs)
     end
 
+    test "create_list/1 with duplicate title returns error changeset" do
+      Lists.create_list(@valid_attrs)
+      assert {:error, %Ecto.Changeset{}} = Lists.create_list(@valid_attrs)
+    end
+
     test "update_list/2 with valid data updates the list" do
       list = list_fixture()
       assert {:ok, %List{} = list} = Lists.update_list(list, @update_attrs)

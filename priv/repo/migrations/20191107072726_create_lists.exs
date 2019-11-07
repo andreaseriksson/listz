@@ -10,6 +10,6 @@ defmodule Listz.Repo.Migrations.CreateLists do
       timestamps()
     end
 
-    create index(:lists, [:slug])
+    create unique_index(:lists, [:slug])
   end
 end
