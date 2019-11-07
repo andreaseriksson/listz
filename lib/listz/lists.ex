@@ -38,6 +38,22 @@ defmodule Listz.Lists do
   def get_list!(id), do: Repo.get!(List, id)
 
   @doc """
+  Gets a single list by slug.
+
+  Raises `Ecto.NoResultsError` if the List does not exist.
+
+  ## Examples
+
+      iex> get_list_by_slug!(123)
+      %List{}
+
+      iex> get_list_by_slug!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_list_by_slug!(slug), do: Repo.get_by!(List, slug: slug)
+
+  @doc """
   Creates a list.
 
   ## Examples

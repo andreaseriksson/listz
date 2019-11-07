@@ -13,7 +13,21 @@ defmodule Listz.Lists.List do
   @doc false
   def changeset(list, attrs) do
     list
-    |> cast(attrs, [:title, :slug, :description])
-    |> validate_required([:title, :slug, :description])
+    |> cast(attrs, [:title, :description])
+    |> validate_required([:title, :description])
+    |> set_slug()
+  end
+
+  defp set_slug(changeset) do
+    case fetch_change(changeset, :title) do
+      {:ok, "" <> title} -> put_change(changeset, :slug, transform_url(title))
+      _ -> changeset
+    end
+  end
+
+  defp transform_url(title) do
+    title
+    |> String.downcase()
+    |> String.replace(" ", "-")
   end
 end

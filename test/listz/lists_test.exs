@@ -6,8 +6,8 @@ defmodule Listz.ListsTest do
   describe "lists" do
     alias Listz.Lists.List
 
-    @valid_attrs %{description: "some description", slug: "some slug", title: "some title"}
-    @update_attrs %{description: "some updated description", slug: "some updated slug", title: "some updated title"}
+    @valid_attrs %{description: "some description", title: "some title"}
+    @update_attrs %{description: "some updated description", title: "some updated title"}
     @invalid_attrs %{description: nil, slug: nil, title: nil}
 
     def list_fixture(attrs \\ %{}) do
@@ -29,10 +29,15 @@ defmodule Listz.ListsTest do
       assert Lists.get_list!(list.id) == list
     end
 
+    test "get_list_by_slug!/1 returns the list with given slug" do
+      list = list_fixture()
+      assert Lists.get_list_by_slug!(list.slug) == list
+    end
+
     test "create_list/1 with valid data creates a list" do
       assert {:ok, %List{} = list} = Lists.create_list(@valid_attrs)
       assert list.description == "some description"
-      assert list.slug == "some slug"
+      assert list.slug == "some-title"
       assert list.title == "some title"
     end
 
@@ -44,7 +49,7 @@ defmodule Listz.ListsTest do
       list = list_fixture()
       assert {:ok, %List{} = list} = Lists.update_list(list, @update_attrs)
       assert list.description == "some updated description"
-      assert list.slug == "some updated slug"
+      assert list.slug == "some-updated-title"
       assert list.title == "some updated title"
     end
 
