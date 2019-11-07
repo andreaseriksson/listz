@@ -17,6 +17,7 @@ defmodule ListzWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/lists", ListController
   end
 
   # Other scopes may use custom stacks.
