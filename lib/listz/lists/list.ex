@@ -7,6 +7,8 @@ defmodule Listz.Lists.List do
     field :slug, :string
     field :title, :string
 
+    has_many :tasks, Listz.Tasks.Task
+
     timestamps()
   end
 

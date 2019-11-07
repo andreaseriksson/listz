@@ -29,6 +29,17 @@ defmodule Listz.ListsTest do
       assert Lists.get_list!(list.id) == list
     end
 
+    test "with_tasks/1 returns the tasks association for a single list" do
+      list = list_fixture()
+      assert %List{tasks: %Ecto.Association.NotLoaded{}} = list
+      assert %List{tasks: []} = Lists.with_tasks(list)
+    end
+
+    test "with_tasks/1 returns the tasks association for a list of lists" do
+      list = list_fixture()
+      assert [%List{tasks: []}] = Lists.with_tasks([list])
+    end
+
     test "get_list_by_slug!/1 returns the list with given slug" do
       list = list_fixture()
       assert Lists.get_list_by_slug!(list.slug) == list

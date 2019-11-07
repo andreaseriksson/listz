@@ -13,12 +13,16 @@ defmodule Listz.Tasks do
 
   ## Examples
 
-      iex> list_tasks()
+      iex> list_tasks(list)
       [%Task{}, ...]
 
   """
-  def list_tasks do
-    Repo.all(Task)
+  def list_tasks(list) do
+    (
+      from t in Task,
+      where: t.list_id == ^list.id
+    )
+    |> Repo.all()
   end
 
   @doc """
@@ -35,7 +39,7 @@ defmodule Listz.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(list, id), do: Repo.get_by!(Task, list_id: list.id, id: id)
 
   @doc """
   Creates a task.
@@ -49,8 +53,8 @@ defmodule Listz.Tasks do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_task(attrs \\ %{}) do
-    %Task{}
+  def create_task(list, attrs \\ %{}) do
+    Ecto.build_assoc(list, :tasks)
     |> Task.changeset(attrs)
     |> Repo.insert()
   end

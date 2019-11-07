@@ -18,7 +18,8 @@ defmodule Listz.Lists do
 
   """
   def list_lists do
-    Repo.all(List)
+    List
+    |> Repo.all()
   end
 
   @doc """
@@ -52,6 +53,21 @@ defmodule Listz.Lists do
 
   """
   def get_list_by_slug!(slug), do: Repo.get_by!(List, slug: slug)
+
+
+  @doc """
+  Preloads the tasks association on a single or a list of lists.
+
+  ## Examples
+
+      iex> with_tasks(list)
+      %List{tasks: []}
+
+      iex> with_tasks([list])
+      [%List{tasks: []}]
+
+  """
+  def with_tasks(list_or_lists), do: Repo.preload(list_or_lists, :tasks )
 
   @doc """
   Creates a list.

@@ -5,7 +5,7 @@ defmodule Listz.Tasks.Task do
   schema "tasks" do
     field :completed, :boolean, default: false
     field :content, :string
-    field :list_id, :id
+    belongs_to :list, Listz.Lists.List
 
     timestamps()
   end
