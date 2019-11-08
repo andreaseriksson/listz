@@ -5,7 +5,10 @@ defmodule ListzWeb.ListController do
   alias Listz.Lists.List
 
   def index(conn, _params) do
-    lists = Lists.list_lists()
+    lists =
+      Lists.list_lists()
+      |> Lists.with_tasks()
+
     render(conn, "index.html", lists: lists)
   end
 
@@ -27,7 +30,10 @@ defmodule ListzWeb.ListController do
   end
 
   def show(conn, %{"id" => id}) do
-    list = Lists.get_list_by_slug!(id)
+    list =
+      Lists.get_list_by_slug!(id)
+      |> Lists.with_tasks()
+
     render(conn, "show.html", list: list)
   end
 
