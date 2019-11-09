@@ -1,30 +1,28 @@
-<h1>Listing Lists</h1>
+<h1 class="font-bold text-xl mb-6 mt-8">Lists</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Slug</th>
-      <th>Description</th>
+<%= form_for @changeset, Routes.list_path(@conn, :create), fn f -> %>
+  <div class="flex">
+    <%= text_input f, :title, placeholder: "Add a new list", class: "bg-gray-200 appearance-none border-2 border-t border-b border-l border-gray-200 rounded-l w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" %>
+    <%= submit "Save", class: "px-4 rounded-r bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 border-2 border-t border-b border-r border-blue-500 hover:border-blue-700" %>
+  </div>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for list <- @lists do %>
-    <tr>
-      <td><%= list.title %></td>
-      <td><%= list.slug %></td>
-      <td><%= list.description %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.list_path(@conn, :show, list.slug) %></span>
-        <span><%= link "Edit", to: Routes.list_path(@conn, :edit, list.slug) %></span>
-        <span><%= link "Delete", to: Routes.list_path(@conn, :delete, list.slug), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
+  <%= if error_tag(f, :title) != [] do %>
+    <div class="text-red-500 text-sm font-bold">
+      List title <%= error_tag f, :title %>
+    </div>
+  <% end %>
 <% end %>
-  </tbody>
-</table>
 
-<span><%= link "New List", to: Routes.list_path(@conn, :new) %></span>
+<h2 class="font-semibold text-l mb-4 mt-8">Listing Lists</h2>
+
+<%= for list <- @lists do %>
+  <div class="flex mb-2">
+    <div class="flex-1">
+      <%= link list.title, to: Routes.list_path(@conn, :show, list.slug) %>
+      <span class="ml-2 text-sm text-gray-600">(<%= Enum.count(list.tasks) %> tasks)</span>
+    </div>
+    <div class="">
+      <%= link "Delete", to: Routes.list_path(@conn, :delete, list.slug), method: :delete, data: [confirm: "Are you sure?"], class: "text-blue-600" %>
+    </div>
+  </div>
+<% end %>

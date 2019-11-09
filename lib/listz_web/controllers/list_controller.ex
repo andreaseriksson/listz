@@ -3,13 +3,17 @@ defmodule ListzWeb.ListController do
 
   alias Listz.Lists
   alias Listz.Lists.List
+  alias Listz.Tasks
+  alias Listz.Tasks.Task
+
+  defp get_lists do
+    Lists.list_lists() |> Lists.with_tasks()
+  end
 
   def index(conn, _params) do
-    lists =
-      Lists.list_lists()
-      |> Lists.with_tasks()
+    changeset = Lists.change_list(%List{})
 
-    render(conn, "index.html", lists: lists)
+    render(conn, "index.html", lists: get_lists(), changeset: changeset)
   end
 
   def new(conn, _params) do
@@ -25,7 +29,7 @@ defmodule ListzWeb.ListController do
         |> redirect(to: Routes.list_path(conn, :show, list.slug))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "index.html", lists: get_lists(), changeset: changeset)
     end
   end
 
@@ -34,7 +38,9 @@ defmodule ListzWeb.ListController do
       Lists.get_list_by_slug!(id)
       |> Lists.with_tasks()
 
-    render(conn, "show.html", list: list)
+    changeset = Tasks.change_task(%Task{})
+
+    render(conn, "show.html", list: list, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do

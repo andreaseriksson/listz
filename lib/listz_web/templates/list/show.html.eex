@@ -1,23 +1,40 @@
-<h1>Show List</h1>
+<div class="flex mb-6 mt-8">
+  <h1 class="flex-1 font-bold text-xl"><%= @list.title %></h1>
+  <%= link "All lists", to: Routes.list_path(@conn, :index), class: "text-blue-600" %>
+</div>
 
-<ul>
+<%= form_for @changeset, Routes.list_task_path(@conn, :create, @list.slug), fn f -> %>
+  <div class="flex">
+    <%= text_input f, :content, placeholder: "Add a new task", auto_complete: false, class: "bg-gray-200 appearance-none border-2 border-t border-b border-l border-gray-200 rounded-l w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" %>
+    <%= submit "Save", class: "px-4 rounded-r bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 border-2 border-t border-b border-r border-blue-500 hover:border-blue-700" %>
+  </div>
 
-  <li>
-    <strong>Title:</strong>
-    <%= @list.title %>
-  </li>
+  <%= if error_tag(f, :content) != [] do %>
+    <div class="text-red-500 text-sm font-bold">
+      Task <%= error_tag f, :content %>
+    </div>
+  <% end %>
+<% end %>
 
-  <li>
-    <strong>Slug:</strong>
-    <%= @list.slug %>
-  </li>
+<h2 class="font-semibold text-l mb-4 mt-8">Listing Tasks</h2>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @list.description %>
-  </li>
+<%= for task <- @list.tasks do %>
+  <div class="flex mb-2">
+    <div class="flex-1">
+      <%= form_for task_changeset(task), Routes.list_task_path(@conn, :update, @list.slug, task), fn f -> %>
+        <%= label task, :completed do %>
+          <%= checkbox f, :completed, class: "mr-2", id: input_id(task, :completed), onchange: "this.form.submit()" %>
+          <%= task.content %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="">
+      <%= link "Delete", to: Routes.list_task_path(@conn, :delete, @list.slug, task), method: :delete, data: [confirm: "Are you sure?"], class: "text-blue-600" %>
+    </div>
+  </div>
+<% end %>
 
-</ul>
-
+<!--
 <span><%= link "Edit", to: Routes.list_path(@conn, :edit, @list.slug) %></span>
 <span><%= link "Back", to: Routes.list_path(@conn, :index) %></span>
+-->

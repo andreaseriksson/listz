@@ -17,7 +17,9 @@ defmodule ListzWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/lists", ListController
+    resources "/lists", ListController do
+      resources "/tasks", TaskController, only: [:create, :update, :delete]
+    end
   end
 
   # Other scopes may use custom stacks.
