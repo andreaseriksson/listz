@@ -34,12 +34,12 @@ defmodule ListzWeb.ListControllerTest do
       assert redirected_to(conn) == Routes.list_path(conn, :show, id)
 
       conn = get(conn, Routes.list_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show List"
+      assert html_response(conn, 200) =~ @create_attrs[:title]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.list_path(conn, :create), list: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New List"
+      assert html_response(conn, 200) =~ "can&#39;t be blank"
     end
   end
 
@@ -59,9 +59,6 @@ defmodule ListzWeb.ListControllerTest do
       conn = put(conn, Routes.list_path(conn, :update, list.slug), list: @update_attrs)
       list = Lists.get_list!(list.id)
       assert redirected_to(conn) == Routes.list_path(conn, :show, list.slug)
-
-      conn = get(conn, Routes.list_path(conn, :show, list.slug))
-      assert html_response(conn, 200) =~ "some updated description"
     end
 
     test "renders errors when data is invalid", %{conn: conn, list: list} do
