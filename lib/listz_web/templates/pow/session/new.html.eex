@@ -1,0 +1,28 @@
+<h1 class="font-bold text-xl mb-6 mt-8">Sign in</h1>
+
+<%= form_for @changeset, @action, [as: :user], fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="mb-8 bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= label f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+    <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset), class: "base-text-input" %>
+    <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+  </div>
+
+  <div class="mb-4">
+    <%= label f, :password %>
+    <%= password_input f, :password, class: "base-text-input" %>
+    <%= error_tag f, :password %>
+  </div>
+
+  <div>
+    <%= submit "Sign in", class: "base-submit-btn" %>
+    <span class="ml-4">
+      <%= link "Register", to: Routes.pow_registration_path(@conn, :new), class: "text-blue-600" %>
+    </span>
+  </div>
+<% end %>

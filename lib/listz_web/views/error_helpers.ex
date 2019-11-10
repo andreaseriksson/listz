@@ -10,7 +10,7 @@ defmodule ListzWeb.ErrorHelpers do
   """
   def error_tag(form, field) do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error), class: "help-block")
+      content_tag(:span, translate_error(error), class: "text-red-500 text-sm font-bold")
     end)
   end
 
