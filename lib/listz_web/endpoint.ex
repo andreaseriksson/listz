@@ -42,5 +42,7 @@ defmodule ListzWeb.Endpoint do
     key: "_listz_key",
     signing_salt: "40R36q42"
 
+  plug Pow.Plug.Session, otp_app: :listz
+
   plug ListzWeb.Router
 end
