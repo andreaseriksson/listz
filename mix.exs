@@ -43,7 +43,9 @@ defmodule Listz.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:pow, "~> 1.0.14"}
+      {:pow, "~> 1.0.14"},
+      {:swoosh, "~> 0.24"},
+      {:phoenix_swoosh, "~> 0.2"}
     ]
   end
 

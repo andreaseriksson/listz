@@ -16,3 +16,7 @@ config :listz, ListzWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :listz, Listz.Mailer,
+  adapter: Swoosh.Adapters.Test
+

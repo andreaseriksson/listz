@@ -29,7 +29,8 @@ config :phoenix, :json_library, Jason
 config :listz, :pow,
   user: Listz.Users.User,
   repo: Listz.Repo,
-  web_module: ListzWeb
+  web_module: ListzWeb,
+  controller_callbacks: ListzWeb.ControllerCallbacks
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

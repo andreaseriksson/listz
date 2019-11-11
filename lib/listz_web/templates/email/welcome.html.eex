@@ -1,0 +1,1 @@
+<h2>Welcome to Listz, <%= @user.email %></h2>

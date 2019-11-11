@@ -16,6 +16,9 @@ config :listz, ListzWeb.Endpoint,
 # Do not print debug messages in production
 config :logger, level: :info
 
+# Needs to be changed later
+config :listz, Listz.Mailer, adapter: Bamboo.LocalAdapter
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
