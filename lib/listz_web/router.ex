@@ -26,9 +26,9 @@ defmodule ListzWeb.Router do
   end
 
   scope "/", ListzWeb do
-    pipe_through :browser
+    pipe_through [:browser, :protected]
 
-    get "/", PageController, :index
+    get "/", ListController, :index
     resources "/lists", ListController do
       resources "/tasks", TaskController, only: [:create, :update, :delete]
     end
