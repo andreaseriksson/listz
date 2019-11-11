@@ -1,29 +1,12 @@
 defmodule ListzWeb.TaskControllerTest do
   use ListzWeb.ConnCase
+  import Listz.TestDataSetup
 
-  alias Listz.Lists
   alias Listz.Tasks
 
   @create_attrs %{content: "Important task"}
   @update_attrs %{completed: true}
   @invalid_attrs %{content: nil}
-
-  def fixture(:list) do
-    {:ok, list} = Lists.create_list(%{title: "My task list"})
-    list
-  end
-
-  def fixture(:task, list) do
-    {:ok, task} = Tasks.create_task(list, @create_attrs)
-    task
-  end
-
-  defp login %{conn: conn} do
-    user = %Listz.Users.User{}
-    conn = Pow.Plug.assign_current_user(conn, user, otp_app: :listz)
-
-    {:ok, conn: conn}
-  end
 
   describe "create task as not logged in" do
     setup [:create_list]
@@ -96,17 +79,6 @@ defmodule ListzWeb.TaskControllerTest do
       conn = get(conn, Routes.list_path(conn, :show, list.slug))
       refute html_response(conn, 200) =~ "Important task"
     end
-  end
-
-  defp create_list(_) do
-    list = fixture(:list)
-    {:ok, list: list}
-  end
-
-  defp create_task(_) do
-    list = fixture(:list)
-    task = fixture(:task, list)
-    {:ok, list: list, task: task}
   end
 end
 

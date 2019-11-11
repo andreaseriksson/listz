@@ -1,23 +1,12 @@
 defmodule ListzWeb.ListControllerTest do
   use ListzWeb.ConnCase
+  import Listz.TestDataSetup
 
   alias Listz.Lists
 
   @create_attrs %{description: "some description", slug: "some slug", title: "some title"}
   @update_attrs %{description: "some updated description", slug: "some updated slug", title: "some updated title"}
   @invalid_attrs %{description: nil, slug: nil, title: nil}
-
-  def fixture(:list) do
-    {:ok, list} = Lists.create_list(@create_attrs)
-    list
-  end
-
-  defp login %{conn: conn} do
-    user = %Listz.Users.User{}
-    conn = Pow.Plug.assign_current_user(conn, user, otp_app: :listz)
-
-    {:ok, conn: conn}
-  end
 
   describe "index as not logged in" do
     test "GET /", %{conn: conn} do
@@ -114,10 +103,5 @@ defmodule ListzWeb.ListControllerTest do
       assert redirected_to(request) == Routes.list_path(conn, :index)
       assert Lists.list_lists() == []
     end
-  end
-
-  defp create_list(_) do
-    list = fixture(:list)
-    {:ok, list: list}
   end
 end
