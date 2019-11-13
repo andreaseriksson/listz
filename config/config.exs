@@ -32,6 +32,15 @@ config :listz, :pow,
   web_module: ListzWeb,
   controller_callbacks: ListzWeb.ControllerCallbacks
 
+config :arc,
+  storage: Arc.Storage.S3,
+  bucket: System.get_env("AWS_BUCKET_NAME")
+
+config :ex_aws,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY"),
+  region: System.get_env("AWS_REGION")
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

@@ -1,7 +1,16 @@
-<div class="flex mb-6 mt-8">
+<div class="flex mb-2 mt-8">
   <h1 class="flex-1 font-bold text-xl"><%= @list.title %></h1>
-  <%= link "All lists", to: Routes.list_path(@conn, :index), class: "text-blue-600" %>
+  <%= link "Edit", to: Routes.list_path(@conn, :edit, @list.slug), class: "text-blue-600" %>
+  <%= link "All lists", to: Routes.list_path(@conn, :index), class: "ml-2 text-blue-600" %>
 </div>
+
+<p class="mb-6 text-gray-600">
+  <%= @list.description %>
+</p>
+
+<%= if @list.attachment do %>
+  <img src="<%= Listz.Attachment.url({@list.attachment, @list}, :original, signed: true) %>" class="mb-6 h-16 object-contain w-full" alt="Phoenix Framework Logo" />
+<% end %>
 
 <%= form_for @changeset, Routes.list_task_path(@conn, :create, @list.slug), fn f -> %>
   <div class="flex">
