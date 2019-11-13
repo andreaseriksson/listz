@@ -7,6 +7,7 @@ defmodule Listz.Lists do
   alias Listz.Repo
 
   alias Listz.Lists.List
+  alias Listz.Tasks.Task
 
   @doc """
   Returns the list of lists.
@@ -67,7 +68,10 @@ defmodule Listz.Lists do
       [%List{tasks: []}]
 
   """
-  def with_tasks(list_or_lists), do: Repo.preload(list_or_lists, :tasks )
+  def with_tasks(list_or_lists) do
+    list_or_lists
+    |> Repo.preload([tasks: (from t in Task, order_by: [asc: :completed, desc: :id])])
+  end
 
   @doc """
   Creates a list.
