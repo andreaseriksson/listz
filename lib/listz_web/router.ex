@@ -29,7 +29,8 @@ defmodule ListzWeb.Router do
     pipe_through [:browser, :protected]
 
     get "/", ListController, :index
-    resources "/lists", ListController do
+    resources "/lists", ListController, except: [:new] do
+      delete "/attachment", AttachmentController, :delete
       resources "/tasks", TaskController, only: [:create, :update, :delete]
     end
   end

@@ -60,7 +60,7 @@ defmodule ListzWeb.ListControllerTest do
     end
   end
 
-  describe "updatr list as not logged in" do
+  describe "update list as not logged in" do
     setup [:create_list]
 
     test "redirects to login", %{conn: conn, list: list} do

@@ -10,6 +10,7 @@
 
 <%= if @list.attachment do %>
   <img src="<%= Listz.Attachment.url({@list.attachment, @list}, :original, signed: true) %>" class="mb-6 h-16 object-contain w-full" alt="Phoenix Framework Logo" />
+  <%= link "Delete", to: Routes.list_attachment_path(@conn, :delete, @list.slug), method: :delete, data: [confirm: "Are you sure?"], class: "text-blue-600" %>
 <% end %>
 
 <%= form_for @changeset, Routes.list_task_path(@conn, :create, @list.slug), fn f -> %>

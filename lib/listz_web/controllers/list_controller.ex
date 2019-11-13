@@ -16,11 +16,6 @@ defmodule ListzWeb.ListController do
     render(conn, "index.html", lists: get_lists(), changeset: changeset)
   end
 
-  def new(conn, _params) do
-    changeset = Lists.change_list(%List{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
   def create(conn, %{"list" => list_params}) do
     case Lists.create_list(list_params) do
       {:ok, list} ->
