@@ -14,4 +14,12 @@ import "phoenix_html"
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
-import socket from "./socket"
+import socket, {initializeListChannel} from "./socket"
+
+var Turbolinks = require("turbolinks")
+Turbolinks.start()
+
+document.addEventListener("turbolinks:load", () => {
+  // Javascript that should be reenabled after a new page visit
+  initializeListChannel(socket)
+})

@@ -54,26 +54,29 @@ let socket = new Socket("/socket", {params: {token: userToken}})
 //     end
 //
 // Finally, connect to the socket:
-socket.connect()
 
-const listElement = document.querySelector('[data-list]')
+export const initializeListChannel = socket => {
+  socket.connect()
 
-if (listElement) {
-  const listSlug = listElement.dataset.list
-  const userId = listElement.dataset.userId
+  const listElement = document.querySelector('[data-list]')
 
-  // Now that you are connected, you can join channels with a topic:
-  let channel = socket.channel(`list:${listSlug}`, {})
-  channel.join()
-    .receive("ok", resp => { console.log("Joined successfully", resp) })
-    .receive("error", resp => { console.log("Unable to join", resp) })
+  if (listElement) {
+    const listSlug = listElement.dataset.list
+    const userId = listElement.dataset.userId
+
+    // Now that you are connected, you can join channels with a topic:
+    let channel = socket.channel(`list:${listSlug}`, {})
+    channel.join()
+      .receive("ok", resp => { console.log("Joined successfully", resp) })
+      .receive("error", resp => { console.log("Unable to join", resp) })
 
 
-  channel.on('list:updated', data => {
-    if (data.user_id == userId) {
-      document.getElementById('reload-alert').classList.remove('hidden')
-    }
-  })
+    channel.on('list:updated', data => {
+      if (data.user_id == userId) {
+        document.getElementById('reload-alert').classList.remove('hidden')
+      }
+    })
+  }
 }
 
 export default socket
