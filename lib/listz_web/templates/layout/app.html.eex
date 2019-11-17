@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Listz · Phoenix Framework</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <meta name="user-token" content="<%= assigns[:user_token] %>"/>
   </head>
-  <body class="font-thin">
+  <body class="font-thin relative">
     <header>
       <section class="container mx-auto max-w-lg py-6 px-4 flex items-center justify-between flex-wrap border-b border-gray-400">
         <a href="http://phoenixframework.org/" class="block">

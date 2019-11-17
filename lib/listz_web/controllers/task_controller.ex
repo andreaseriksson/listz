@@ -10,6 +10,7 @@ defmodule ListzWeb.TaskController do
     case Tasks.create_task(list, task_params) do
       {:ok, _task} ->
         conn
+        |> notify_users(list)
         |> put_flash(:info, "Task created successfully.")
         |> redirect(to: Routes.list_path(conn, :show, list.slug))
 
@@ -27,6 +28,7 @@ defmodule ListzWeb.TaskController do
     case Tasks.update_task(task, task_params) do
       {:ok, _task} ->
         conn
+        |> notify_users(list)
         |> put_flash(:info, "Task updated successfully.")
         |> redirect(to: Routes.list_path(conn, :show, list.slug))
 
@@ -41,10 +43,16 @@ defmodule ListzWeb.TaskController do
     list = Lists.get_list_by_slug!(list_id)
     task = Tasks.get_task!(list, id)
 
-    {:ok, _list} = Tasks.delete_task(task)
+    {:ok, _task} = Tasks.delete_task(task)
 
     conn
+    |> notify_users(list)
     |> put_flash(:info, "Task deleted successfully.")
     |> redirect(to: Routes.list_path(conn, :show, list.slug))
+  end
+
+  defp notify_users(conn, %{slug: slug} = _list) do
+    ListzWeb.Endpoint.broadcast "list:#{slug}", "list:updated", %{user_id: conn.assigns.current_user.id}
+    conn
   end
 end

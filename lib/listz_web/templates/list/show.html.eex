@@ -1,4 +1,4 @@
-<div class="flex mb-2 mt-8">
+<div class="flex mb-2 mt-8" data-list="<%= @list.slug %>" data-user-id="<%= @current_user.id %>">
   <h1 class="flex-1 font-bold text-xl"><%= @list.title %></h1>
   <%= link "Edit", to: Routes.list_path(@conn, :edit, @list.slug), class: "text-blue-600" %>
   <%= link "All lists", to: Routes.list_path(@conn, :index), class: "ml-2 text-blue-600" %>
@@ -44,7 +44,6 @@
   </div>
 <% end %>
 
-<!--
-<span><%= link "Edit", to: Routes.list_path(@conn, :edit, @list.slug) %></span>
-<span><%= link "Back", to: Routes.list_path(@conn, :index) %></span>
--->
+<div id="reload-alert" class="hidden absolute top-0 right-0 mt-10 mr-10 w-48 text-sm bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-lg" role="alert">
+  Page has changes. <%= link "Reload", to: Routes.list_path(@conn, :show, @list.slug), class: "text-blue-600" %>
+</div>
