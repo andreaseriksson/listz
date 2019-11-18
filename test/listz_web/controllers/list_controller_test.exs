@@ -44,11 +44,6 @@ defmodule ListzWeb.ListControllerTest do
       conn = get(conn, Routes.list_path(conn, :show, id))
       assert html_response(conn, 200) =~ @create_attrs[:title]
     end
-
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.list_path(conn, :create), list: @invalid_attrs)
-      assert html_response(conn, 200) =~ "can&#39;t be blank"
-    end
   end
 
   describe "show list" do
