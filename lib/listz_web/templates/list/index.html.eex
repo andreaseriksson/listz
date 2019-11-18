@@ -4,14 +4,4 @@
 
 <h2 class="font-semibold text-l mb-4 mt-8">Listing Lists</h2>
 
-<%= for list <- @lists do %>
-  <div class="flex mb-2">
-    <div class="flex-1">
-      <%= link list.title, to: Routes.list_path(@conn, :show, list.slug) %>
-      <span class="ml-2 text-sm text-gray-600">(<%= Enum.count(list.tasks) %> tasks)</span>
-    </div>
-    <div class="">
-      <%= link "Delete", to: Routes.list_path(@conn, :delete, list.slug), method: :delete, data: [confirm: "Are you sure?"], class: "text-blue-600" %>
-    </div>
-  </div>
-<% end %>
+<%= live_render(@conn, ListzWeb.ListListLive, session: %{}) %>
