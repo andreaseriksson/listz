@@ -15,7 +15,10 @@ config :listz, ListzWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "oQqowfRm1/s2TYRsspXB5MYa6VEhB7pp5eXdJm9o3UmNu9dLv/HNJ6GpHXPKYIye",
   render_errors: [view: ListzWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Listz.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Listz.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "AWUa5/TBYM/kraorgFPZk7GhQfLX2GFY"
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

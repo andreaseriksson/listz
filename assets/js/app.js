@@ -11,6 +11,9 @@ import css from "../css/app.css"
 //
 import "phoenix_html"
 
+import {Socket} from "phoenix"
+import LiveSocket from "phoenix_live_view"
+
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:
@@ -21,5 +24,9 @@ Turbolinks.start()
 
 document.addEventListener("turbolinks:load", () => {
   // Javascript that should be reenabled after a new page visit
+
+  let liveSocket = new LiveSocket("/live", Socket)
+  liveSocket.connect()
+
   initializeListChannel(socket)
 })

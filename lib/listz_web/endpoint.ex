@@ -1,6 +1,8 @@
 defmodule ListzWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :listz
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", ListzWeb.UserSocket,
     websocket: true,
     longpoll: false

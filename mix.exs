@@ -52,7 +52,9 @@ defmodule Listz.MixProject do
       {:ex_aws_s3, "~> 2.0"},
       {:hackney, "~> 1.6"},
       {:poison, "~> 3.1"},
-      {:sweet_xml, "~> 0.6"}
+      {:sweet_xml, "~> 0.6"},
+      {:phoenix_live_view, "~> 0.4.1"},
+      {:floki, ">= 0.0.0", only: :test}
     ]
   end
 
