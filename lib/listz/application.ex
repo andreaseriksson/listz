@@ -11,7 +11,9 @@ defmodule Listz.Application do
       # Start the Ecto repository
       Listz.Repo,
       # Start the endpoint when the application starts
-      ListzWeb.Endpoint
+      ListzWeb.Endpoint,
+      # Starts Presence Process
+      Listz.Presence
       # Starts a worker by calling: Listz.Worker.start_link(arg)
       # {Listz.Worker, arg},
     ]

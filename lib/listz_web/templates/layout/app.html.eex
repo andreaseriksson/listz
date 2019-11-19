@@ -39,6 +39,10 @@
         </div>
       <% end %>
 
+      <%= if @current_user do %>
+        <%= live_render(@conn, ListzWeb.OnlineUsersLive, session: %{user: @current_user}) %>
+      <% end %>
+
       <%= render @view_module, @view_template, assigns %>
     </main>
   </body>
