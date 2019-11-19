@@ -89,6 +89,7 @@ defmodule Listz.Lists do
     %List{}
     |> List.changeset(attrs)
     |> Repo.insert()
+    |> notify_subscribers()
   end
 
   @doc """
@@ -107,6 +108,7 @@ defmodule Listz.Lists do
     list
     |> List.changeset(attrs)
     |> Repo.update()
+    |> notify_subscribers()
   end
 
   @doc """
@@ -123,6 +125,7 @@ defmodule Listz.Lists do
   """
   def delete_list(%List{} = list) do
     Repo.delete(list)
+    |> notify_subscribers()
   end
 
   @doc """
@@ -136,5 +139,15 @@ defmodule Listz.Lists do
   """
   def change_list(%List{} = list) do
     List.changeset(list, %{})
+  end
+
+  @topic inspect(__MODULE__)
+  def subscribe do
+    Phoenix.PubSub.subscribe(Listz.PubSub, @topic)
+  end
+
+  defp notify_subscribers(data) do
+    Phoenix.PubSub.broadcast(Listz.PubSub, @topic, {__MODULE__, :lists_updated})
+    data
   end
 end

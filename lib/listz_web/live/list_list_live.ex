@@ -21,6 +21,8 @@ defmodule ListzWeb.ListListLive do
   end
 
   def mount(%{}, socket) do
+    Lists.subscribe
+
     assigns =
       if connected?(socket) do
         [
@@ -44,5 +46,13 @@ defmodule ListzWeb.ListListLive do
       |> redirect(to: Routes.list_path(ListzWeb.Endpoint, :index))
 
     {:stop, response}
+  end
+
+  def handle_info({Lists, _}, socket) do
+    assigns = [
+      lists: Lists.list_lists() |> Lists.with_tasks()
+    ]
+
+    {:noreply, assign(socket, assigns)}
   end
 end
