@@ -10,7 +10,9 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Listz.{Lists}
+alias Listz.{Lists, Repo}
 
 Lists.list_lists
 |> Enum.each(&Lists.delete_list/1)
+
+Ecto.Adapters.SQL.query!(Repo, "DELETE FROM users WHERE inserted_at < (NOW() - INTERVAL '1 day')", [])
